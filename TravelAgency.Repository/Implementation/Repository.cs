@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TravelAgency.Domain.DomainModels;
+using TravelAgency.Domain.Identity;
 using TravelAgency.Repository.Interface;
 using TravelAgencyApp.Data;
 
@@ -25,14 +21,20 @@ namespace TravelAgency.Repository.Implementation
             if (typeof(T).IsAssignableFrom(typeof(TravelPackage)))
             {
                 return entities
-                    .Include("TravelPackageAccommodationStays")
-                    .Include("itineraries")
+                    .Include("Accommodation")
+                    .Include("Itineraries")
                     .AsEnumerable();
             }
             else if (typeof(T).IsAssignableFrom(typeof(Accommodation)))
             {
                 return entities
-                    .Include("TravelPackageAccommodationStays")
+                    .Include("TravelPackages")
+                    .AsEnumerable();
+            }
+            else if (typeof(T).IsAssignableFrom(typeof(TravelAgencyUser)))
+            {
+                return entities
+                    .Include("Bookings")
                     .AsEnumerable();
             }
             else
@@ -45,14 +47,20 @@ namespace TravelAgency.Repository.Implementation
             if (typeof(T).IsAssignableFrom(typeof(TravelPackage)))
             {
                 return entities
-                    .Include("TravelPackageAccommodationStays")
-                    .Include("itineraries")
+                    .Include("Accommodation")
+                    .Include("Itineraries")
                     .First(x => x.Id == id);
             }
             else if (typeof(T).IsAssignableFrom(typeof(Accommodation)))
             {
                 return entities
-                    .Include("TravelPackageAccommodationStays")
+                    .Include("TravelPackages")
+                    .First(x => x.Id == id);
+            }
+            else if (typeof(T).IsAssignableFrom(typeof(TravelAgencyUser)))
+            {
+                return entities
+                    .Include("Bookings")
                     .First(x => x.Id == id);
             }
             else

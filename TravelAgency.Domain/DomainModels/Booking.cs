@@ -12,12 +12,9 @@ namespace TravelAgency.Domain.DomainModels
     {
      public Guid TravelPackageId {  get; set; }
      public Guid UserId { get; set; }
-
-    public int NumberOfRooms { get; set; }
+     public int NumberOfRooms { get; set; }
+     public int FullPrice { get; set; }
      public virtual TravelPackage? TravelPackage { get; set; }
-
      public virtual TravelAgencyUser? User { get; set; }
-
-     
     }
 }
