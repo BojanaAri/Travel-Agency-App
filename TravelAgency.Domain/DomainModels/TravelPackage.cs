@@ -15,6 +15,8 @@ namespace TravelAgency.Domain.DomainModels
         public Guid? AccommodationId { get; set; } 
         public virtual Accommodation? Accommodation { get; set; }
         public virtual ICollection<Itinerary>? Itineraries { get; set; }
+
+        public virtual ICollection<Booking>? Bookings { get; set; }
         public int? AvailableRooms { get; set; }
 
 
