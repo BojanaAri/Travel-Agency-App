@@ -12,7 +12,11 @@ namespace TravelAgency.Domain.DomainModels
         public string? Description { get; set; }
         public decimal NumberOfNights { get; set; }
         public virtual DateTime DepartureDate { get; set; }
-        public virtual ICollection<TravelPackageAccommodationStay>? TravelPackageAccommodationStays { get; set; }
-        public virtual ICollection<Itinerary>? itineraries { get; set; }
+        public Guid? AccommodationId { get; set; } 
+        public virtual Accommodation? Accommodation { get; set; }
+        public virtual ICollection<Itinerary>? Itineraries { get; set; }
+        public int? AvailableRooms { get; set; }
+
+
     }
 }
