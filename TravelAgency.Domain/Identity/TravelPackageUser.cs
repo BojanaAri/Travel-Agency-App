@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,6 @@ namespace TravelAgency.Domain.Identity
 {
     public class TravelAgencyUser : IdentityUser
     {
-        public UserRole UserRole { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
     }
