@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{451D03CC-2A2C-4D9C-BEAE-739682AD939C}|TravelAgency.Domain\\TravelAgency.Domain.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagency.domain\\travelpackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{451D03CC-2A2C-4D9C-BEAE-739682AD939C}|TravelAgency.Domain\\TravelAgency.Domain.csproj|solutionrelative:travelagency.domain\\travelpackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagencyapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|solutionrelative:travelagencyapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagencyapp\\views\\accommodations\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|solutionrelative:travelagencyapp\\views\\accommodations\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagencyapp\\controllers\\accommodationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24CD8427-EFF8-427E-9DF1-ECA7B05E8F7F}|TravelAgencyApp\\TravelAgency.Web.csproj|solutionrelative:travelagencyapp\\controllers\\accommodationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{451D03CC-2A2C-4D9C-BEAE-739682AD939C}|TravelAgency.Domain\\TravelAgency.Domain.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagency.domain\\domainmodels\\accommodation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{451D03CC-2A2C-4D9C-BEAE-739682AD939C}|TravelAgency.Domain\\TravelAgency.Domain.csproj|solutionrelative:travelagency.domain\\domainmodels\\accommodation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B316AE-07A5-4C9C-A821-3E97EFAB1CC1}|TravelAgency.Repository\\TravelAgency.Repository.csproj|c:\\users\\bojana\\desktop\\finki\\semestar 6\\is\\travel agency app\\travel-agency-app\\travelagency.repository\\implementation\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B316AE-07A5-4C9C-A821-3E97EFAB1CC1}|TravelAgency.Repository\\TravelAgency.Repository.csproj|solutionrelative:travelagency.repository\\implementation\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,14 +43,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TravelPackage.cs",
-              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\TravelPackage.cs",
-              "RelativeDocumentMoniker": "TravelAgency.Domain\\TravelPackage.cs",
-              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\TravelPackage.cs",
-              "RelativeToolTip": "TravelAgency.Domain\\TravelPackage.cs",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Program.cs",
+              "RelativeDocumentMoniker": "TravelAgencyApp\\Program.cs",
+              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Program.cs*",
+              "RelativeToolTip": "TravelAgencyApp\\Program.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:45:07.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Views\\Accommodations\\Create.cshtml",
+              "RelativeDocumentMoniker": "TravelAgencyApp\\Views\\Accommodations\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Views\\Accommodations\\Create.cshtml",
+              "RelativeToolTip": "TravelAgencyApp\\Views\\Accommodations\\Create.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-05T00:44:42.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccommodationsController.cs",
+              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Controllers\\AccommodationsController.cs",
+              "RelativeDocumentMoniker": "TravelAgencyApp\\Controllers\\AccommodationsController.cs",
+              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\Controllers\\AccommodationsController.cs",
+              "RelativeToolTip": "TravelAgencyApp\\Controllers\\AccommodationsController.cs",
+              "ViewState": "AQIAAIgAAAAAAAAAAADwv4wAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:40:52.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Accommodation.cs",
+              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\DomainModels\\Accommodation.cs",
+              "RelativeDocumentMoniker": "TravelAgency.Domain\\DomainModels\\Accommodation.cs",
+              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\DomainModels\\Accommodation.cs",
+              "RelativeToolTip": "TravelAgency.Domain\\DomainModels\\Accommodation.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-21T14:53:33.214Z",
+              "WhenOpened": "2025-02-05T00:38:25.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Repository\\Implementation\\Repository.cs",
+              "RelativeDocumentMoniker": "TravelAgency.Repository\\Implementation\\Repository.cs",
+              "ToolTip": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Repository\\Implementation\\Repository.cs",
+              "RelativeToolTip": "TravelAgency.Repository\\Implementation\\Repository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:37:45.341Z",
               "EditorCaption": ""
             }
           ]
