@@ -1,0 +1,21 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TravelAgency.Domain.DomainModels;
+
+namespace TravelAgencyApp.Data
+{
+    public class ApplicationDbContext : IdentityDbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<TravelPackage> TravelPackages { get; set; }
+        public DbSet<Accommodation> Accommodations { get; set; }
+        public DbSet<TravelPackageAccommodationStay> TravelDates { get; set; }
+        public DbSet<Itinerary> Itineraries { get; set; }
+        public DbSet<TravelPackageAccommodationStay> TravelPackageAccommodationStays { get; set; }
+    }
+
+}

@@ -1,5 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TravelAgency.Domain.Identity;
+using TravelAgency.Repository.Implementation;
+using TravelAgency.Repository.Interface;
+using TravelAgency.Services.Implementation;
+using TravelAgency.Services.Interface;
 using TravelAgencyApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +18,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<ITravelPackageService, TravelPackageService>();
+builder.Services.AddTransient<IAccommodationService, AccommodationService>();
 
 var app = builder.Build();
 
