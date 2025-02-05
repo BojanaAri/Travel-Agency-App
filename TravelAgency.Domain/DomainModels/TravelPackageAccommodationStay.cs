@@ -13,7 +13,7 @@ namespace TravelAgency.Domain.DomainModels
         public Guid TravelPackageId { get; set; }
         public virtual TravelPackage? TravelPackage { get; set; }
 
-        public DateTime? StartDate { get; set; }
-        public int? AvailableRooms { get; set; }
+      //  public DateTime? StartDate { get; set; }
+        
     }
 }

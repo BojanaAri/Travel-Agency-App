@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "kpC6Ennu+9Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgencyApp\\TravelAgency.Web.csproj",
+  "projectFilePath": "C:\\Users\\mkuzm\\Desktop\\Travel-Agency-App\\TravelAgencyApp\\TravelAgency.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bojana\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Bojana\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
