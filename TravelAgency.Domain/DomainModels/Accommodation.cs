@@ -14,6 +14,6 @@ namespace TravelAgency.Domain.DomainModels
         public AccommodationType? accommodationType { get; set; }
         public decimal PricePerNight { get; set; }
         public int MaxNumberOfRooms { get; set; }
-        public virtual ICollection<TravelPackageAccommodationStay>? TravelPackageAccommodationStays { get; set; }
+        public virtual ICollection<TravelPackage>? TravelPackages { get; set; }
     }
 }

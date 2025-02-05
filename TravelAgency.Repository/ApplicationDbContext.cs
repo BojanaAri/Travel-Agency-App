@@ -14,9 +14,8 @@ namespace TravelAgencyApp.Data
 
         public DbSet<TravelPackage> TravelPackages { get; set; }
         public DbSet<Accommodation> Accommodations { get; set; }
-        public DbSet<TravelPackageAccommodationStay> TravelDates { get; set; }
         public DbSet<Itinerary> Itineraries { get; set; }
-        public DbSet<TravelPackageAccommodationStay> TravelPackageAccommodationStays { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 
 }

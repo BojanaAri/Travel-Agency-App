@@ -17,6 +17,5 @@ namespace TravelAgency.Domain.DomainModels
         public virtual ICollection<Itinerary>? Itineraries { get; set; }
         public int? AvailableRooms { get; set; }
 
-
     }
 }
