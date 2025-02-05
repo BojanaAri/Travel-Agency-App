@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.DomainModels;
+using TravelAgency.Domain.ViewModels;
 using TravelAgency.Services.Interface;
 using TravelAgencyApp.Data;
 
@@ -14,10 +15,12 @@ namespace TravelAgency.Web.Controllers
     public class TravelPackagesController : Controller
     {
         private readonly ITravelPackageService _travelPackageService;
+        private readonly IAccommodationService _accommodationService;
 
-        public TravelPackagesController(ITravelPackageService travelPackageService)
+        public TravelPackagesController(ITravelPackageService travelPackageService, IAccommodationService accommodationService)
         {
             _travelPackageService = travelPackageService;
+            _accommodationService = accommodationService;
         }
 
         // GET: TravelPackages
@@ -47,7 +50,12 @@ namespace TravelAgency.Web.Controllers
         // GET: TravelPackages/Create
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new TravelPackageViewModel
+            {
+                Accommodations = _accommodationService.GetAccommodations()
+            };
+
+            return View(viewModel);
         }
 
         // POST: TravelPackages/Create
@@ -55,14 +63,31 @@ namespace TravelAgency.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name,Description,NumberOfNights,DepartureDates")] TravelPackage travelPackage)
+        public IActionResult Create(TravelPackageViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var accommodation = _accommodationService.GetAccommodationById(model.SelectedAccommodationId);
+                var travelPackage = new TravelPackage
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    DepartureDate = model.DepartureDate,
+                    AccommodationId = model.SelectedAccommodationId,
+                    Accommodation = accommodation,
+                    AvailableRooms = accommodation.MaxNumberOfRooms,
+                    NumberOfNights = model.NumberOfNights,
+                    Bookings = new List<Booking>(),
+                    Itineraries = model.Itineraries.Select(it => new Itinerary
+                    {
+                        Description = it.Description,
+                        DayNumber = it.DayNumber,
+                    }).ToList()
+                };
                 _travelPackageService.CreateNewTravelPackage(travelPackage);
                 return RedirectToAction(nameof(Index));
             }
-            return View(travelPackage);
+            return View(model);
         }
 
         // GET: TravelPackages/Edit/5
@@ -78,7 +103,17 @@ namespace TravelAgency.Web.Controllers
             {
                 return NotFound();
             }
-            return View(travelPackage);
+            var viewModel = new TravelPackageViewModel
+            {
+                Id = travelPackage.Id,
+                Name = travelPackage.Name,
+                Description = travelPackage.Description,
+                DepartureDate = travelPackage.DepartureDate,
+                NumberOfNights= travelPackage.NumberOfNights,
+                SelectedAccommodationId= travelPackage.AccommodationId,
+                Accommodations = _accommodationService.GetAccommodations()
+            };
+            return View(viewModel);
         }
 
         // POST: TravelPackages/Edit/5
@@ -86,9 +121,9 @@ namespace TravelAgency.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [Bind("Id,Name,Description,NumberOfNights,DepartureDates")] TravelPackage travelPackage)
+        public IActionResult Edit(Guid id, TravelPackageViewModel model)
         {
-            if (id != travelPackage.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
@@ -97,11 +132,25 @@ namespace TravelAgency.Web.Controllers
             {
                 try
                 {
-                   _travelPackageService.UpdateTravelPackage(travelPackage);
+                    var accommodation = _accommodationService.GetAccommodationById(model.SelectedAccommodationId);
+                    var travelPackage = new TravelPackage
+                    {
+                        Id= model.Id,
+                        Name = model.Name,
+                        Description = model.Description,
+                        DepartureDate = model.DepartureDate,
+                        AccommodationId = model.SelectedAccommodationId,
+                        Accommodation = accommodation,
+                        AvailableRooms = accommodation.MaxNumberOfRooms,
+                        NumberOfNights = model.NumberOfNights,
+                        Bookings = new List<Booking>(),
+                        Itineraries = new List<Itinerary>()
+                    };
+                    _travelPackageService.UpdateTravelPackage(travelPackage);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TravelPackageExists(travelPackage.Id))
+                    if (!TravelPackageExists(model.Id))
                     {
                         return NotFound();
                     }
@@ -112,7 +161,7 @@ namespace TravelAgency.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(travelPackage);
+            return View(model);
         }
 
         // GET: TravelPackages/Delete/5

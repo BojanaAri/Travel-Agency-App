@@ -1,4 +1,4 @@
-﻿@model TravelAgency.Domain.DomainModels.TravelPackage
+﻿@model TravelAgency.Domain.ViewModels.TravelPackageViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -34,6 +34,20 @@
                 <span asp-validation-for="DepartureDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="SelectedAccommodationId" class="control-label">Accommodation: </label>
+                <select asp-for="SelectedAccommodationId" class="form-control" asp-items="@(new SelectList(Model.Accommodations, "Id", "Name"))">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+
+
+            <div class="form-group" id="itineraryContainer">
+                <!-- Dynamically added itineraries will go here -->
+            </div>
+
+            <button type="button" id="addItinerary" class="btn btn-secondary">Add Itinerary</button>
+
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -46,4 +60,33 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            let itineraryIndex = 0;
+
+            $("#addItinerary").click(function () {
+                let html = `
+                                    <div class="itinerary-item" data-index="${itineraryIndex}">
+                                        <div class="form-group">
+                                            <label for="Itineraries_${itineraryIndex}__DayNumber">Day Number:</label>
+                                            <input type="number" name="Itineraries[${itineraryIndex}].DayNumber" class="form-control" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Itineraries_${itineraryIndex}__Description">Description:</label>
+                                            <textarea name="Itineraries[${itineraryIndex}].Description" class="form-control" required></textarea>
+                                        </div>
+                                        <button type="button" class="btn btn-danger remove-itinerary">Remove</button>
+                                        <hr/>
+                                    </div>
+                        `;
+                $("#itineraryContainer").append(html);
+                itineraryIndex++;
+            });
+
+            $(document).on("click", ".remove-itinerary", function () {
+                $(this).closest(".itinerary-item").remove();
+            });
+
+        });
+    </script>
 }
