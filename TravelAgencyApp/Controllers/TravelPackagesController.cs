@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 using TravelAgency.Domain.DomainModels;
 using TravelAgency.Domain.ViewModels;
 using TravelAgency.Services.Interface;
@@ -111,7 +112,8 @@ namespace TravelAgency.Web.Controllers
                 DepartureDate = travelPackage.DepartureDate,
                 NumberOfNights= travelPackage.NumberOfNights,
                 SelectedAccommodationId= travelPackage.AccommodationId,
-                Accommodations = _accommodationService.GetAccommodations()
+                Accommodations = _accommodationService.GetAccommodations(),
+                Itineraries = travelPackage.Itineraries?.ToList()
             };
             return View(viewModel);
         }
@@ -145,7 +147,14 @@ namespace TravelAgency.Web.Controllers
                         NumberOfNights = model.NumberOfNights,
                         Bookings = new List<Booking>(),
                         Itineraries = new List<Itinerary>()
+                        
                     };
+
+                    /*travelPackage.Itineraries.AddRange(model.Itineraries?.Select(i => new Itinerary
+                    {
+                        DayNumber = i.DayNumber,
+                        Description = i.Description
+                    }));*/
                     _travelPackageService.UpdateTravelPackage(travelPackage);
                 }
                 catch (DbUpdateConcurrencyException)

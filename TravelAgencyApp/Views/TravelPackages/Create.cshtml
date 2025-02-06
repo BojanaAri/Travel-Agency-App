@@ -10,42 +10,45 @@
 <h4>TravelPackage</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="container">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberOfNights" class="control-label"></label>
-                <input asp-for="NumberOfNights" class="form-control" />
-                <span asp-validation-for="NumberOfNights" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DepartureDate" class="control-label"></label>
-                <input asp-for="DepartureDate" class="form-control" />
-                <span asp-validation-for="DepartureDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SelectedAccommodationId" class="control-label">Accommodation: </label>
-                <select asp-for="SelectedAccommodationId" class="form-control" asp-items="@(new SelectList(Model.Accommodations, "Id", "Name"))">
-                    <option value="">-- Select --</option>
-                </select>
-            </div>
-
-
-            <div class="form-group" id="itineraryContainer">
-                <!-- Dynamically added itineraries will go here -->
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumberOfNights" class="control-label"></label>
+                    <input asp-for="NumberOfNights" class="form-control" />
+                    <span asp-validation-for="NumberOfNights" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DepartureDate" class="control-label"></label>
+                    <input asp-for="DepartureDate" class="form-control" />
+                    <span asp-validation-for="DepartureDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SelectedAccommodationId" class="control-label">Accommodation: </label>
+                    <select asp-for="SelectedAccommodationId" class="form-control" asp-items="@(new SelectList(Model.Accommodations, "Id", "Name"))">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <button type="button" id="addItinerary" class="btn btn-secondary mt-2" style="display:inline-block">Add Itinerary</button>
             </div>
 
-            <button type="button" id="addItinerary" class="btn btn-secondary">Add Itinerary</button>
+            <div class="container p-0 m-0">
+                <div class="row mt-2" id="itineraryContainer">
+                    <!-- Dynamically added itineraries will go here -->
+                </div>
+            </div>
+            
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -66,19 +69,22 @@
 
             $("#addItinerary").click(function () {
                 let html = `
-                                    <div class="itinerary-item" data-index="${itineraryIndex}">
-                                        <div class="form-group">
-                                            <label for="Itineraries_${itineraryIndex}__DayNumber">Day Number:</label>
-                                            <input type="number" name="Itineraries[${itineraryIndex}].DayNumber" class="form-control" required />
-                                        </div>
+                                        <div class="col-md-3 itinerary-item mb-2" style="display: inline-block;">
+                                  <div class="card "  data-index="${itineraryIndex}">
+                              <div class="card-body">
+                                       <div class="form-group">
+                                           <label for="Itineraries_${itineraryIndex}__DayNumber">Day Number:</label>
+                                           <input type="number" name="Itineraries[${itineraryIndex}].DayNumber" class="form-control" required />
+                                       </div>
                                         <div class="form-group">
                                             <label for="Itineraries_${itineraryIndex}__Description">Description:</label>
                                             <textarea name="Itineraries[${itineraryIndex}].Description" class="form-control" required></textarea>
                                         </div>
-                                        <button type="button" class="btn btn-danger remove-itinerary">Remove</button>
-                                        <hr/>
-                                    </div>
-                        `;
+                                        <button type="button" class="btn btn-danger remove-itinerary mt-2">Remove</button>
+                              </div>
+                         </div>
+                         </div>
+                         `;
                 $("#itineraryContainer").append(html);
                 itineraryIndex++;
             });
