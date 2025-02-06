@@ -815,24 +815,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mkuzm\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Bojana\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mkuzm\\Desktop\\Travel-Agency-App\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
       "projectName": "TravelAgency.Domain",
-      "projectPath": "C:\\Users\\mkuzm\\Desktop\\Travel-Agency-App\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
-      "packagesPath": "C:\\Users\\mkuzm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mkuzm\\Desktop\\Travel-Agency-App\\TravelAgency.Domain\\obj\\",
+      "projectPath": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
+      "packagesPath": "C:\\Users\\Bojana\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Bojana\\Desktop\\finki\\semestar 6\\is\\Travel Agency App\\Travel-Agency-App\\TravelAgency.Domain\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mkuzm\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Bojana\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -858,8 +853,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -886,7 +880,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
