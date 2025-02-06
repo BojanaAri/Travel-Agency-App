@@ -12,8 +12,8 @@ using TravelAgencyApp.Data;
 namespace TravelAgency.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250205001604_Fifth-Migration")]
-    partial class FifthMigration
+    [Migration("20250206124125_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,71 +75,6 @@ namespace TravelAgency.Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -253,6 +188,34 @@ namespace TravelAgency.Repository.Migrations
                     b.ToTable("Accommodations");
                 });
 
+            modelBuilder.Entity("TravelAgency.Domain.DomainModels.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("FullPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRooms")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TravelPackageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TravelPackageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bookings");
+                });
+
             modelBuilder.Entity("TravelAgency.Domain.DomainModels.Itinerary", b =>
                 {
                     b.Property<Guid>("Id")
@@ -281,6 +244,12 @@ namespace TravelAgency.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AccommodationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("AvailableRooms")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DepartureDate")
                         .HasColumnType("datetime2");
 
@@ -290,39 +259,85 @@ namespace TravelAgency.Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("NumberOfNights")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TravelPackages");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.DomainModels.TravelPackageAccommodationStay", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AccommodationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("AvailableRooms")
+                    b.Property<int>("NumberOfNights")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("TravelPackageId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccommodationId");
 
-                    b.HasIndex("TravelPackageId");
+                    b.ToTable("TravelPackages");
+                });
 
-                    b.ToTable("TravelPackageAccommodationStay");
+            modelBuilder.Entity("TravelAgency.Domain.Identity.TravelAgencyUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -336,7 +351,7 @@ namespace TravelAgency.Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -345,7 +360,7 @@ namespace TravelAgency.Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -360,7 +375,7 @@ namespace TravelAgency.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,53 +384,67 @@ namespace TravelAgency.Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TravelAgency.Domain.DomainModels.Booking", b =>
+                {
+                    b.HasOne("TravelAgency.Domain.DomainModels.TravelPackage", "TravelPackage")
+                        .WithMany("Bookings")
+                        .HasForeignKey("TravelPackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TravelPackage");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TravelAgency.Domain.DomainModels.Itinerary", b =>
                 {
                     b.HasOne("TravelAgency.Domain.DomainModels.TravelPackage", "TravelPackage")
-                        .WithMany("itineraries")
+                        .WithMany("Itineraries")
                         .HasForeignKey("TravelPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TravelPackage");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.DomainModels.TravelPackageAccommodationStay", b =>
-                {
-                    b.HasOne("TravelAgency.Domain.DomainModels.Accommodation", "Accommodation")
-                        .WithMany("TravelPackageAccommodationStays")
-                        .HasForeignKey("AccommodationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelAgency.Domain.DomainModels.TravelPackage", "TravelPackage")
-                        .WithMany("TravelPackageAccommodationStays")
-                        .HasForeignKey("TravelPackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Accommodation");
-
-                    b.Navigation("TravelPackage");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.DomainModels.Accommodation", b =>
-                {
-                    b.Navigation("TravelPackageAccommodationStays");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.DomainModels.TravelPackage", b =>
                 {
-                    b.Navigation("TravelPackageAccommodationStays");
+                    b.HasOne("TravelAgency.Domain.DomainModels.Accommodation", "Accommodation")
+                        .WithMany("TravelPackages")
+                        .HasForeignKey("AccommodationId");
 
-                    b.Navigation("itineraries");
+                    b.Navigation("Accommodation");
+                });
+
+            modelBuilder.Entity("TravelAgency.Domain.DomainModels.Accommodation", b =>
+                {
+                    b.Navigation("TravelPackages");
+                });
+
+            modelBuilder.Entity("TravelAgency.Domain.DomainModels.TravelPackage", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Itineraries");
+                });
+
+            modelBuilder.Entity("TravelAgency.Domain.Identity.TravelAgencyUser", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

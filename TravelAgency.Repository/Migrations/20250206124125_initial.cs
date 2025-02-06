@@ -12,6 +12,22 @@ namespace TravelAgency.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Accommodations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    accommodationType = table.Column<int>(type: "int", nullable: true),
+                    PricePerNight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MaxNumberOfRooms = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accommodations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -30,6 +46,8 @@ namespace TravelAgency.Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,6 +66,28 @@ namespace TravelAgency.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TravelPackages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberOfNights = table.Column<int>(type: "int", nullable: false),
+                    DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccommodationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AvailableRooms = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TravelPackages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TravelPackages_Accommodations_AccommodationId",
+                        column: x => x.AccommodationId,
+                        principalTable: "Accommodations",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +196,53 @@ namespace TravelAgency.Repository.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TravelPackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NumberOfRooms = table.Column<int>(type: "int", nullable: false),
+                    FullPrice = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_TravelPackages_TravelPackageId",
+                        column: x => x.TravelPackageId,
+                        principalTable: "TravelPackages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Itineraries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DayNumber = table.Column<int>(type: "int", nullable: false),
+                    TravelPackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Itineraries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Itineraries_TravelPackages_TravelPackageId",
+                        column: x => x.TravelPackageId,
+                        principalTable: "TravelPackages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +281,26 @@ namespace TravelAgency.Repository.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_TravelPackageId",
+                table: "Bookings",
+                column: "TravelPackageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_UserId",
+                table: "Bookings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Itineraries_TravelPackageId",
+                table: "Itineraries",
+                column: "TravelPackageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TravelPackages_AccommodationId",
+                table: "TravelPackages",
+                column: "AccommodationId");
         }
 
         /// <inheritdoc />
@@ -215,10 +322,22 @@ namespace TravelAgency.Repository.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Bookings");
+
+            migrationBuilder.DropTable(
+                name: "Itineraries");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "TravelPackages");
+
+            migrationBuilder.DropTable(
+                name: "Accommodations");
         }
     }
 }

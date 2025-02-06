@@ -11,7 +11,7 @@ namespace TravelAgency.Domain.DomainModels
     public class Booking : BaseEntity
     {
      public Guid TravelPackageId {  get; set; }
-     public Guid UserId { get; set; }
+     public string UserId { get; set; }
      public int NumberOfRooms { get; set; }
      public int FullPrice { get; set; }
      public virtual TravelPackage? TravelPackage { get; set; }
