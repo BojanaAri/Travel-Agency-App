@@ -10,7 +10,7 @@ namespace TravelAgency.Domain.DomainModels
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public decimal NumberOfNights { get; set; }
+        public int NumberOfNights { get; set; }
         public virtual DateTime DepartureDate { get; set; }
         public Guid? AccommodationId { get; set; } 
         public virtual Accommodation? Accommodation { get; set; }

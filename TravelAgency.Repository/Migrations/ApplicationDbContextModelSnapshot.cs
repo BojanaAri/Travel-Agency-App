@@ -200,17 +200,15 @@ namespace TravelAgency.Repository.Migrations
                     b.Property<Guid>("TravelPackageId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TravelPackageId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -258,8 +256,8 @@ namespace TravelAgency.Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("NumberOfNights")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("NumberOfNights")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -393,14 +391,16 @@ namespace TravelAgency.Repository.Migrations
             modelBuilder.Entity("TravelAgency.Domain.DomainModels.Booking", b =>
                 {
                     b.HasOne("TravelAgency.Domain.DomainModels.TravelPackage", "TravelPackage")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("TravelPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TravelAgency.Domain.Identity.TravelAgencyUser", "User")
                         .WithMany("Bookings")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TravelPackage");
 
@@ -434,6 +434,8 @@ namespace TravelAgency.Repository.Migrations
 
             modelBuilder.Entity("TravelAgency.Domain.DomainModels.TravelPackage", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Itineraries");
                 });
 

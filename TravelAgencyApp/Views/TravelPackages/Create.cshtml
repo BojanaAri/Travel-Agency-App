@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="NumberOfNights" class="control-label"></label>
-                    <input asp-for="NumberOfNights" class="form-control" />
+                    <input asp-for="NumberOfNights" class="form-control" id="NumberOfNights" />
                     <span asp-validation-for="NumberOfNights" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -67,8 +67,19 @@
         $(document).ready(function () {
             let itineraryIndex = 0;
 
-            $("#addItinerary").click(function () {
-                let html = `
+            function limitItineraries() {
+                var numberOfNights = document.getElementById("NumberOfNights").valueAsNumber;
+
+
+                if (itineraryIndex >= numberOfNights) {
+                    $("#addItinerary").prop("disabled", true);
+                } else {
+                    $("#addItinerary").prop("disabled", false);
+                }
+            }
+            
+                $("#addItinerary").click(function () {
+                    let html = `
                                         <div class="col-md-3 itinerary-item mb-2" style="display: inline-block;">
                                   <div class="card "  data-index="${itineraryIndex}">
                               <div class="card-body">
@@ -85,14 +96,21 @@
                          </div>
                          </div>
                          `;
-                $("#itineraryContainer").append(html);
-                itineraryIndex++;
+                    $("#itineraryContainer").append(html);
+                    itineraryIndex++;
+
+                    limitItineraries();
             });
 
             $(document).on("click", ".remove-itinerary", function () {
                 $(this).closest(".itinerary-item").remove();
+                itineraryIndex--;
+                limitItineraries();
             });
 
+           
         });
+
+        
     </script>
 }

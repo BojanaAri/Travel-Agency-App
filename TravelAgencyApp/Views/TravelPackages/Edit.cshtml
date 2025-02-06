@@ -90,7 +90,17 @@
     }
     <script>
         $(document).ready(function () {
-            let itineraryIndex = 0;
+            let itineraryIndex = @Model.Itineraries?.Count != 0 ? @Model.Itineraries?.Count : 0;
+            function limitItineraries() {
+                var numberOfNights = document.getElementById("NumberOfNights").valueAsNumber;
+
+
+                if (itineraryIndex >= numberOfNights) {
+                    $("#addItinerary").prop("disabled", true);
+                } else {
+                    $("#addItinerary").prop("disabled", false);
+                }
+            }
 
             $("#addItinerary").click(function () {
                 let html = `
@@ -112,12 +122,16 @@
                                  `;
                 $("#itineraryContainer").append(html);
                 itineraryIndex++;
+                limitItineraries();
             });
 
             $(document).on("click", ".remove-itinerary", function () {
                 $(this).closest(".itinerary-item").remove();
+                itineraryIndex--;
+                limitItineraries();
             });
 
+            limitItineraries();
         });
     </script>
 }

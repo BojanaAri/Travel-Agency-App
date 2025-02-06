@@ -17,7 +17,7 @@ namespace TravelAgency.Domain.ViewModels
         public string? Description { get; set; }
         [Required]
         [Range(1,365, ErrorMessage = "Number of nights must be between 1 and 365 days")]
-        public decimal NumberOfNights { get; set; }
+        public int NumberOfNights { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public virtual DateTime DepartureDate { get; set; }

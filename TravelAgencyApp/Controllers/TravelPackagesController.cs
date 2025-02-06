@@ -79,11 +79,13 @@ namespace TravelAgency.Web.Controllers
                     AvailableRooms = accommodation.MaxNumberOfRooms,
                     NumberOfNights = model.NumberOfNights,
                     Bookings = new List<Booking>(),
-                    Itineraries = model.Itineraries.Select(it => new Itinerary
-                    {
-                        Description = it.Description,
-                        DayNumber = it.DayNumber,
-                    }).ToList()
+                    Itineraries = model.Itineraries
+                    .Where(i => !string.IsNullOrWhiteSpace(i.Description) || !string.IsNullOrWhiteSpace(i.DayNumber.ToString()))
+                    .Select(it => new Itinerary
+                            {
+                                Description = it.Description,
+                                DayNumber = it.DayNumber,
+                            }).ToList()
                 };
                 _travelPackageService.CreateNewTravelPackage(travelPackage);
                 return RedirectToAction(nameof(Index));
@@ -135,26 +137,29 @@ namespace TravelAgency.Web.Controllers
                 try
                 {
                     var accommodation = _accommodationService.GetAccommodationById(model.SelectedAccommodationId);
-                    var travelPackage = new TravelPackage
+                    var travelPackage = _travelPackageService.GetTravelPackageById(id);  
+                    if (travelPackage == null)
                     {
-                        Id= model.Id,
-                        Name = model.Name,
-                        Description = model.Description,
-                        DepartureDate = model.DepartureDate,
-                        AccommodationId = model.SelectedAccommodationId,
-                        Accommodation = accommodation,
-                        AvailableRooms = accommodation.MaxNumberOfRooms,
-                        NumberOfNights = model.NumberOfNights,
-                        Bookings = new List<Booking>(),
-                        Itineraries = new List<Itinerary>()
-                        
-                    };
+                        return NotFound();
+                    }
+                   
+                    travelPackage.Name = model.Name;
+                    travelPackage.Description = model.Description;
+                    travelPackage.DepartureDate = model.DepartureDate;
+                    travelPackage.AccommodationId = model.SelectedAccommodationId;
+                    travelPackage.Accommodation = accommodation;
+                    travelPackage.AvailableRooms = accommodation.MaxNumberOfRooms;
+                    travelPackage.NumberOfNights = model.NumberOfNights;
 
-                    /*travelPackage.Itineraries.AddRange(model.Itineraries?.Select(i => new Itinerary
-                    {
-                        DayNumber = i.DayNumber,
-                        Description = i.Description
-                    }));*/
+                    travelPackage.Itineraries?.Clear();
+                    travelPackage.Itineraries.AddRange(model.Itineraries?
+                        .Where(i => !string.IsNullOrWhiteSpace(i.Description) || !string.IsNullOrWhiteSpace(i.DayNumber.ToString()))
+                        .Select(i => new Itinerary
+                        {
+                            DayNumber = i.DayNumber,
+                            Description = i.Description
+                        }));
+
                     _travelPackageService.UpdateTravelPackage(travelPackage);
                 }
                 catch (DbUpdateConcurrencyException)

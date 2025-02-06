@@ -36,7 +36,6 @@ namespace TravelAgency.Services.Implementation
 
         public TravelPackage UpdateTravelPackage(TravelPackage travelPackage)
         {
-
             return _travelPackageRepository.Update(travelPackage);
         }
     }
