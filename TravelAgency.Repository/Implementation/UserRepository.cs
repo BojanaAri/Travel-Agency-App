@@ -5,29 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.DomainModels;
+using TravelAgency.Domain.Identity;
 using TravelAgency.Repository.Interface;
 using TravelAgencyApp.Data;
 
 namespace TravelAgency.Repository.Implementation
 {
-    public class BookingRepository : IBookingRepository
+    public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext context;
-        private DbSet<Booking> entities;
+        private DbSet<TravelAgencyUser> entities;
 
-
-        public BookingRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context)
         {
             this.context = context;
-            entities = context.Set<Booking>();
+            this.entities = context.Set<TravelAgencyUser>();
         }
 
         
-        public List<Booking> GetBookingsByUser(string username)
+        public TravelAgencyUser getUserByUsername(string username)
         {
-            return entities.Include(b => b.User).Include(b => b.TravelPackage)
-                .Where(b => b.UserId == username).
-                ToList();
+            return entities
+                 .Where(u => u.Id == username).FirstOrDefault();
         }
     }
 }

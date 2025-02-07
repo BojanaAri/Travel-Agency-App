@@ -23,8 +23,12 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IBookingRepository), typeof(BookingRepository));
+builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddTransient<ITravelPackageService, TravelPackageService>();
 builder.Services.AddTransient<IAccommodationService, AccommodationService>();
+builder.Services.AddTransient<IBookingService, BookingService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

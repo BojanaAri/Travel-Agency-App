@@ -14,10 +14,12 @@ namespace TravelAgency.Services.Implementation
     public class BookingService : IBookingService
     {
         private readonly IRepository<Booking> _bookingRepository;
+        private readonly IBookingRepository _bookingRepository1;
 
-        public BookingService(IRepository<Booking> bookingRepository)
+        public BookingService(IRepository<Booking> bookingRepository, IBookingRepository bookingRepository1)
         {
             _bookingRepository = bookingRepository;
+            _bookingRepository1 = bookingRepository1;
         }
 
         public Booking CreateNewBooking(Booking booking)
@@ -43,7 +45,7 @@ namespace TravelAgency.Services.Implementation
 
         public List<Booking> GetBookingsByUser(string username)
         {
-            throw new NotImplementedException();
+            return _bookingRepository1.GetBookingsByUser(username);
         }
 
         public Booking UpdateBooking(Booking booking)
