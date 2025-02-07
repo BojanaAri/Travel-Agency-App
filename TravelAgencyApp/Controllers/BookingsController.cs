@@ -53,12 +53,11 @@ namespace TravelAgency.Web.Controllers
             return View(booking);
         }
 
-      //  GET: Bookings/Create
-        public IActionResult Create()
+      //  GET: Bookings/Create?travelPackageId
+        public IActionResult Create(Guid travelPackageId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userService.getUserByUsername(userId);
-            var travelPackageId = Guid.Parse("cff23f73-655f-42dd-51f7-08dd46acc282");
             ViewData["TravelPackageId"] = travelPackageId;
             ViewData["TravelPackageName"] = _travelPackageService.GetTravelPackageById(travelPackageId).Name;
             ViewData["User"] = user.FirstName + " " + user.LastName;
