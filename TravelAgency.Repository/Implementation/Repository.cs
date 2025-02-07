@@ -37,6 +37,13 @@ namespace TravelAgency.Repository.Implementation
                     .Include("Bookings")
                     .AsEnumerable();
             }
+            else if (typeof(T).IsAssignableFrom(typeof(Booking)))
+            {
+                return entities
+                     .Include("TravelPackage")
+                     .Include("User")
+                     .AsEnumerable();
+            }
             else
             {
                 return entities.AsEnumerable();

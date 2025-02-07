@@ -2,26 +2,33 @@
 
 @{
     ViewData["Title"] = "Create";
+    var travelPackageName = ViewData["TravelPackageName"];
+    var travelPackageId = ViewData["TravelPackageId"];
+    var userId = (string)ViewData["User"];
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 <h1>Create</h1>
 
 <h4>Booking</h4>
+<p>Travel Package: @travelPackageName  @travelPackageId</p>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TravelPackageId" class="control-label"></label>
-                <select asp-for="TravelPackageId" class ="form-control" asp-items="ViewBag.TravelPackageId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            @* <div class="form-group"> *@
+            @*     <label asp-for="TravelPackageId" class="control-label"></label> *@
+            @*     <select asp-for="TravelPackageId" class ="form-control" asp-items="ViewBag.TravelPackageId"></select> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="UserId" class="control-label"></label> *@
+            @*     <input asp-for="UserId" class="form-control" /> *@
+            @*     <span asp-validation-for="UserId" class="text-danger"></span> *@
+            @* </div> *@
+
+            <input type="hidden" asp-for="TravelPackageId" value="@travelPackageId" />
+            <input type="hidden" asp-for="UserId" value="@userId" />
             <div class="form-group">
                 <label asp-for="NumberOfRooms" class="control-label"></label>
                 <input asp-for="NumberOfRooms" class="form-control" />
