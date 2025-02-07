@@ -15,16 +15,34 @@ namespace TravelAgency.Services.Implementation
     {
         private readonly IRepository<Booking> _bookingRepository;
         private readonly IBookingRepository _bookingRepository1;
+        private readonly IUserService _userService;
+        private readonly ITravelPackageService _travelPackageService;
 
-        public BookingService(IRepository<Booking> bookingRepository, IBookingRepository bookingRepository1)
+        public BookingService(IRepository<Booking> bookingRepository, IBookingRepository bookingRepository1, IUserService userService, ITravelPackageService travelPackageService)
         {
             _bookingRepository = bookingRepository;
             _bookingRepository1 = bookingRepository1;
+            _userService = userService;
+            _travelPackageService = travelPackageService;
         }
 
-        public Booking CreateNewBooking(Booking booking)
+        public Booking CreateNewBooking(string userId, Guid travelPackageId, int numRooms)
         {
-           return  _bookingRepository.Insert(booking);
+            Booking booking = new Booking();
+            booking.Id = Guid.NewGuid();
+            booking.UserId = userId;
+            booking.User = _userService.getUserByUsername(booking.UserId);
+            booking.TravelPackageId = travelPackageId;
+
+            TravelPackage travelPackage= _travelPackageService.GetTravelPackageById(travelPackageId);
+            booking.TravelPackage = travelPackage;
+
+            booking.NumberOfRooms = numRooms;
+
+            Accommodation accommodation= travelPackage.Accommodation;
+
+            booking.FullPrice = accommodation.PricePerNight * travelPackage.NumberOfNights * numRooms;
+            return  _bookingRepository.Insert(booking);
         }
 
         public Booking DeleteBooking(Guid id)
