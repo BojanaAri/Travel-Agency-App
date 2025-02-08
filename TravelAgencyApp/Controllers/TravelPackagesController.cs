@@ -73,6 +73,7 @@ namespace TravelAgency.Web.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
+                    Image = model.ImageUrl,
                     DepartureDate = model.DepartureDate,
                     AccommodationId = model.SelectedAccommodationId,
                     Accommodation = accommodation,
@@ -111,6 +112,7 @@ namespace TravelAgency.Web.Controllers
                 Id = travelPackage.Id,
                 Name = travelPackage.Name,
                 Description = travelPackage.Description,
+                ImageUrl = travelPackage.Image,
                 DepartureDate = travelPackage.DepartureDate,
                 NumberOfNights= travelPackage.NumberOfNights,
                 SelectedAccommodationId= travelPackage.AccommodationId,
@@ -145,6 +147,7 @@ namespace TravelAgency.Web.Controllers
                    
                     travelPackage.Name = model.Name;
                     travelPackage.Description = model.Description;
+                    travelPackage.Image = model.ImageUrl;
                     travelPackage.DepartureDate = model.DepartureDate;
                     travelPackage.AccommodationId = model.SelectedAccommodationId;
                     travelPackage.Accommodation = accommodation;
