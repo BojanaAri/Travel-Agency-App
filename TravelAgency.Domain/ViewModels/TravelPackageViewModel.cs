@@ -16,6 +16,8 @@ namespace TravelAgency.Domain.ViewModels
         [Required]
         public string? Description { get; set; }
         [Required]
+        public string? ImageUrl { get; set; }
+        [Required]
         [Range(1,365, ErrorMessage = "Number of nights must be between 1 and 365 days")]
         public int NumberOfNights { get; set; }
         [Required]
