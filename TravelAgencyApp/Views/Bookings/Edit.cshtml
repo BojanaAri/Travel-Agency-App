@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout2.cshtml";
+    var travelPackageName = ViewData["TravelPackageName"];
 }
 
 <h1>Edit</h1>
@@ -14,10 +15,14 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            
+            <input type="hidden" asp-for="travelPackageId" value="" />
             <div class="form-group">
                 <label asp-for="numberOfRooms" class="control-label"></label>
                 <input asp-for="numberOfRooms" class="form-control" />
                 <span asp-validation-for="numberOfRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
            
         </form>

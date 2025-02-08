@@ -90,12 +90,21 @@ namespace TravelAgency.Web.Controllers
             }
 
             var booking = bookingService.GetBookingById(id);
+            var bookingDTO = new BookingDTO
+
+            {
+                travelPackageId = booking.TravelPackageId,
+                numberOfRooms = booking.NumberOfRooms
+            };
+            ViewData["TravelPackageId"] = booking.TravelPackageId;
+            ViewData["TravelPackageName"] = _travelPackageService.GetTravelPackageById(booking.TravelPackageId).Name;
+
             if (booking == null)
             {
                 return NotFound();
             }
           //  ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
-            return View(booking);
+            return View(bookingDTO);
         }
 
         //// POST: Bookings/Edit/5
@@ -103,18 +112,20 @@ namespace TravelAgency.Web.Controllers
         //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("TravelPackageId,UserId,NumberOfRooms,FullPrice,Id")] Booking booking)
+        public async Task<IActionResult> Edit(Guid id, [Bind("numberOfRooms")] BookingDTO booking)
         {
-            if (id != booking.Id)
-            {
-                return NotFound();
-            }
+            //if (id != booking.Id)
+            //{
+            //    return NotFound();
+            //}
 
+            Booking bookingObj = bookingService.GetBookingById(id);
+            bookingObj.NumberOfRooms = booking.numberOfRooms;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    bookingService.UpdateBooking(booking);
+                    bookingService.UpdateBooking(bookingObj);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

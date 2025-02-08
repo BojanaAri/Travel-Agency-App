@@ -68,7 +68,7 @@ namespace TravelAgency.Services.Implementation
 
         public Booking UpdateBooking(Booking booking)
         {
-            throw new NotImplementedException();
+            return _bookingRepository.Update(booking);
         }
     }
 }
