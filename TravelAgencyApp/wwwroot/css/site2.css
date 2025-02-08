@@ -1,5 +1,7 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -49,21 +51,22 @@ a#book-now-button:hover {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
+
 .modal-content {
     background-color: white;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: auto; /* 15% from the top and centered */
     padding: 20px;
+    top:100px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
-/* The Close Button */
 .close {
     color: #aaa;
-    float: right;
     font-size: 28px;
     font-weight: bold;
+    width: fit-content;
+    display: inline-block;
 }
 
     .close:hover,
@@ -71,4 +74,32 @@ a#book-now-button:hover {
         color: black;
         text-decoration: none;
         cursor: pointer;
+        width: fit-content;
+        display: inline-block;
     }
+
+.nav-link {
+    color: white!important;
+    font-size: 19px;
+    margin-right: 30px;
+}
+
+.navbar {
+    transition: 0.3s ease-out;
+    backdrop-filter: blur(8px) brightness(1.1);
+    -webkit-backdrop-filter: blur(8px) brightness(1.2);
+    font-weight:500;
+    font-size: 16px;
+}
+
+.navbar-light .navbar-brand {
+    width: 70px !important;
+}
+
+
+#travel-package-popup-name {
+    width: fit-content;
+    display: inline-block;
+    font-size: xxx-large;
+    color: #585a5b;
+}
