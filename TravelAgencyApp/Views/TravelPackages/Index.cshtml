@@ -10,7 +10,7 @@
     display: inline-block;
     margin: 0px 30px 0 0;">Travel Packages</h1>
 
-<a class="btn btn-secondary" style="display:inline-block; position:relative; top:-9px" asp-action="Create">Create New</a>
+<a class="btn btn-secondary" style="display:inline-block; position:relative; top:-8px" asp-action="Create">Create New</a>
 
 
 @for (int i = 0; i < Model.Count(); i++)
@@ -29,7 +29,7 @@
               <div class="card-body">
                   <button class="card-title btn m-0" 
                             id="myBtn-@i" 
-                            style=" background-color: #3ea3a1;
+                            style=" background-color: #388872;
                                     color: white;
                                     display: block; 
                                     text-align: center; 
@@ -37,9 +37,62 @@
                             onclick="popup(@i)">@item.Name</button>
                     <!-- The Modal -->
                     <div id="myModal-@i" class="modal">
-                      <div class="modal-content">
-                        <span class="close" onclick="closePopup(@i)">&times;</span>
-                        <p>Some text in the Modal..</p>
+                      <div class="modal-content p-0">
+                          <div class="row justify-content-between px-3">
+                              <p class="card-text mb-2 fw-bold" id="travel-package-popup-name">Travel Package for: @item.Name</p>
+                              <span class="close" style="float:right" onclick="closePopup(@i)">&times;</span>
+                          </div>
+                      <div class="row p-0">
+                            <img class="col-6" src="@item.Image" style="height: auto; object-fit: cover;" alt="Card image cap">
+                            <div class="col-6 d-flex flex-column justify-content-between" style="padding-right:30px;">
+        
+                                <p class="card-text mt-3 pt-0">@item.Description</p>
+        
+                                @if (item.Itineraries != null && item.Itineraries.Any()) 
+                                {
+                                    <div class="row justify-content-evenly">
+                                        @foreach (var itinerary in item.Itineraries) 
+                                        {
+                                            <div class="card col-6 text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                                <div class="card-header">Day number: @itinerary.DayNumber</div>
+                                                <div class="card-body">
+                                                    <p class="card-text">@itinerary.Description</p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+
+                                <!-- Wrapping button inside a div with d-flex to push it down -->
+                                <div class="mt-auto d-flex justify-content-end">
+                                    <a asp-controller="Bookings" asp-action="Create" asp-route-travelPackageId="@item.Id" style="margin-bottom: 13px; display: flex; align-items: center; text-decoration: none; color: inherit;">
+                                        <p style="font-size: 17px;
+                                                    font-weight: 600;
+                                                    margin: 2px 9px 0 0;
+
+                                                    color: rgb(113 179 161);">Book now</p>
+                                        <svg width="35" height="35" fill="rgb(113 179 161)" viewBox="0 0 512.00 512.00" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#3ea3a1" stroke-width="0.00512">
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M405.92,168c-8.576,0-14.691,0-21.92,0v-16c0-13.234-10.766-24-24-24v-24c0-17.673-14.327-32-32-32H184 
+                                                         c-17.673,0-32,14.327-32,32v24c-13.234,0-24,10.766-24,24v16c-7.229,0-13.344,0-21.92,0C87.28,168,72,183.28,72,202.08v203.84 
+                                                         c0,18.8,15.28,34.08,34.08,34.08c78.796,0-83.345,0,299.84,0c18.8,0,34.08-15.28,34.08-34.08V202.08C440,183.28,424.72,168,405.92,168z 
+                                                         M384,204h-24v-20h24V204z M360,276h24v140h-24V276z M352,260c-4.4,0-8-3.6-8-8v-24c0-4.4,3.6-8,8-8c8.637,0,31.262,0,40,0
+                                                         c4.4,0,8,3.6,8,8v24c0,4.4-3.6,8-8,8C383.363,260,360.738,260,352,260z M184,112c0-4.418,3.582-8,8-8h128c4.418,0,8,3.582,8,8v16
+                                                         c-13.234,0-24,10.766-24,24v16h-96v-16c0-13.234-10.766-24-24-24V112z M128,276h24v148h-24V276z M120,260c-4.4,0-8-3.6-8-8v-24
+                                                         c0-4.4,3.6-8,8-8c8.637,0,31.262,0,40,0c4.4,0,8,3.6,8,8v24c0,4.4-3.6,8-8,8C151.258,260,128.631,260,120,260z M152,204h-24v-20h24V204z 
+                                                         M144,168v-16c0-4.484,3.516-8,8-8h32c4.41,0,8,3.586,8,8v16C125.647,168,172.733,168,144,168z M301.76,313.6l-32.48,32.88
+                                                         c-7.36,7.44-19.2,7.44-26.56,0l-32.48-32.88c-11.84-11.92-13.92-31.2-3.6-44.56c12.4-16.16,35.52-17.28,49.36-3.28
+                                                         c13.84-14,36.96-12.88,49.36,3.28C315.68,282.4,313.6,301.68,301.76,313.6z M320,152c0-4.484,3.516-8,8-8h32c4.41,0,8,3.586,8,8v16
+                                                         c-28.711,0,18.314,0-48,0V152z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+
+                            </div>
+                       </div>
+
                       </div>
                     </div>
 
@@ -48,12 +101,12 @@
               
             <div class="card-footer" style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                <a href="/TravelPackages/Edit/@item.Id" class="btn btn-info" style="float:right;">
+                <a href="/TravelPackages/Edit/@item.Id" class="btn  border-0" style="float:right; background-color: rgb(113 179 161) ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil" viewBox="0 0 16 16">
                   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                 </svg>
                 </a>
-                <a href="/TravelPackages/Delete/@item.Id" class="btn btn-danger mr-1" style="float:right;">
+                <a href="/TravelPackages/Delete/@item.Id" class="btn  mr-1 border-0" style="float:right; margin-right: 5px; background-color: rgba(220, 53, 69, 0.7); ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash3" viewBox="0 0 16 16">
                   <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                 </svg>
@@ -66,8 +119,8 @@
                     <p style="font-size: 17px;
                                 font-weight: 600;
                                 margin: 2px 9px 0 0;
-                                color: #3ea3a1;">Book now</p>
-                    <svg width="35" height="35" fill="#3ea3a1" viewBox="0 0 512.00 512.00" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#3ea3a1" stroke-width="0.00512">
+                                color: rgb(113 179 161);">Book now</p>
+                    <svg width="35" height="35" fill="rgb(113 179 161)" viewBox="0 0 512.00 512.00" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#3ea3a1" stroke-width="0.00512">
                         <g id="SVGRepo_iconCarrier">
                             <path d="M405.92,168c-8.576,0-14.691,0-21.92,0v-16c0-13.234-10.766-24-24-24v-24c0-17.673-14.327-32-32-32H184 
                                      c-17.673,0-32,14.327-32,32v24c-13.234,0-24,10.766-24,24v16c-7.229,0-13.344,0-21.92,0C87.28,168,72,183.28,72,202.08v203.84 
