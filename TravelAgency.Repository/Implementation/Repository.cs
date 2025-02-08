@@ -70,6 +70,12 @@ namespace TravelAgency.Repository.Implementation
                     .Include("Bookings")
                     .First(x => x.Id == id);
             }
+            else if(typeof(T).IsAssignableFrom(typeof(Booking)))
+            {
+                return entities
+                    .Include("TravelPackage")
+                    .First(x => x.Id == id);
+            }
             else
             {
                 return entities.First(x => x.Id == id);

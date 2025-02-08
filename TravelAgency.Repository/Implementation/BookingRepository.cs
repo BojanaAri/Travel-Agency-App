@@ -22,7 +22,6 @@ namespace TravelAgency.Repository.Implementation
             entities = context.Set<Booking>();
         }
 
-        
         public List<Booking> GetBookingsByUser(string username)
         {
             return entities.Include(b => b.User).Include(b => b.TravelPackage)

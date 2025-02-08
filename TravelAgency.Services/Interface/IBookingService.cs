@@ -12,7 +12,7 @@ namespace TravelAgency.Services.Interface
         public List<Booking> GetBookings();
         public Booking GetBookingById(Guid? id);
         public List<Booking> GetBookingsByUser(String username);
-        public Booking CreateNewBooking(Booking booking);
+        public Booking CreateNewBooking(string userId, Guid travelPackageId, int numRooms);
         public Booking UpdateBooking(Booking booking);
         public Booking DeleteBooking(Guid id);
     }

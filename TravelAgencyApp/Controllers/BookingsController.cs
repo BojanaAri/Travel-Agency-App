@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.DomainModels;
+using TravelAgency.Domain.DTO;
 using TravelAgency.Services.Implementation;
 using TravelAgency.Services.Interface;
 using TravelAgencyApp.Data;
@@ -37,30 +39,28 @@ namespace TravelAgency.Web.Controllers
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            //var booking = await _context.Bookings
-            //    .Include(b => b.TravelPackage)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (booking == null)
-            //{
-            //    return NotFound();
-            //}
+            var booking = bookingService.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
 
-            return View();
+            return View(booking);
         }
 
-      //  GET: Bookings/Create
-        public IActionResult Create()
+      //  GET: Bookings/Create?travelPackageId
+        public IActionResult Create(Guid travelPackageId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var travelPackageId = Guid.Parse("cff23f73-655f-42dd-51f7-08dd46acc282");
+            var user = _userService.getUserByUsername(userId);
             ViewData["TravelPackageId"] = travelPackageId;
             ViewData["TravelPackageName"] = _travelPackageService.GetTravelPackageById(travelPackageId).Name;
-            ViewData["User"] = userId;
+            ViewData["User"] = user.FirstName + " " + user.LastName;
             return View();
         }
 
@@ -69,107 +69,100 @@ namespace TravelAgency.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TravelPackageId,UserId,NumberOfRooms,FullPrice")] Booking booking)
+        public async Task<IActionResult> Create([Bind("travelPackageId,numberOfRooms")] BookingDTO booking)
         {
-            booking.Id = Guid.NewGuid();
-            booking.User = _userService.getUserByUsername(booking.UserId);
-            booking.TravelPackage = _travelPackageService.GetTravelPackageById(booking.TravelPackageId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Console.Write(booking);
             if (ModelState.IsValid)
             {
-                bookingService.CreateNewBooking(booking);
+                bookingService.CreateNewBooking(userId,booking.travelPackageId,booking.numberOfRooms);
                 return RedirectToAction(nameof(Index));
             }
             return View(booking);
         }
 
-        //// GET: Bookings/Edit/5
-        //public async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Bookings/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var booking = await _context.Bookings.FindAsync(id);
-        //    if (booking == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
-        //    return View(booking);
-        //}
+            var booking = bookingService.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+          //  ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
+            return View(booking);
+        }
 
         //// POST: Bookings/Edit/5
         //// To protect from overposting attacks, enable the specific properties you want to bind to.
         //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("TravelPackageId,UserId,NumberOfRooms,FullPrice,Id")] Booking booking)
-        //{
-        //    if (id != booking.Id)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("TravelPackageId,UserId,NumberOfRooms,FullPrice,Id")] Booking booking)
+        {
+            if (id != booking.Id)
+            {
+                return NotFound();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(booking);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!BookingExists(booking.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
-        //    return View(booking);
-        //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    bookingService.UpdateBooking(booking);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //if (!BookingExists(booking.Id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
+                }
+                return RedirectToAction(nameof(Index));
+            }
+          //  ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
+            return View(booking);
+        }
 
         //// GET: Bookings/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var booking = await _context.Bookings
-        //        .Include(b => b.TravelPackage)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (booking == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var booking = bookingService.GetBookingById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(booking);
-        //}
+            return View(booking);
+        }
 
         //// POST: Bookings/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var booking = await _context.Bookings.FindAsync(id);
-        //    if (booking != null)
-        //    {
-        //        _context.Bookings.Remove(booking);
-        //    }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var booking = bookingService.GetBookingById(id);
+            if (booking != null)
+            {
+                bookingService.DeleteBooking(id);
+            }
 
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
 
         //private bool BookingExists(Guid id)
         //{

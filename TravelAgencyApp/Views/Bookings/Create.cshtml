@@ -1,44 +1,33 @@
-﻿@model TravelAgency.Domain.DomainModels.Booking
+﻿@model TravelAgency.Domain.DTO.BookingDTO
 
 @{
     ViewData["Title"] = "Create";
     var travelPackageName = ViewData["TravelPackageName"];
     var travelPackageId = ViewData["TravelPackageId"];
-    var userId = (string)ViewData["User"];
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var user = ViewData["User"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
-
+<h3>Welcome @user</h3>
 <h4>Booking</h4>
-<p>Travel Package: @travelPackageName  @travelPackageId</p>
+<h4>Travel Package: @travelPackageName </h4>
 <hr />
+
+<p>Enter the number of rooms you want to book for this Travel Package</p>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group"> *@
-            @*     <label asp-for="TravelPackageId" class="control-label"></label> *@
-            @*     <select asp-for="TravelPackageId" class ="form-control" asp-items="ViewBag.TravelPackageId"></select> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="UserId" class="control-label"></label> *@
-            @*     <input asp-for="UserId" class="form-control" /> *@
-            @*     <span asp-validation-for="UserId" class="text-danger"></span> *@
-            @* </div> *@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>     
 
-            <input type="hidden" asp-for="TravelPackageId" value="@travelPackageId" />
-            <input type="hidden" asp-for="UserId" value="@userId" />
+            <input type="hidden" asp-for="travelPackageId" value="@travelPackageId" />
+            
             <div class="form-group">
-                <label asp-for="NumberOfRooms" class="control-label"></label>
-                <input asp-for="NumberOfRooms" class="form-control" />
-                <span asp-validation-for="NumberOfRooms" class="text-danger"></span>
+                <label asp-for="numberOfRooms" class="control-label"></label>
+                <input asp-for="numberOfRooms" class="form-control" />
+                <span asp-validation-for="numberOfRooms" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FullPrice" class="control-label"></label>
-                <input asp-for="FullPrice" class="form-control" />
-                <span asp-validation-for="FullPrice" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
