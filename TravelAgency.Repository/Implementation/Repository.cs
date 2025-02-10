@@ -73,7 +73,8 @@ namespace TravelAgency.Repository.Implementation
             else if(typeof(T).IsAssignableFrom(typeof(Booking)))
             {
                 return entities
-                    .Include("TravelPackage")
+                    .Include("TravelPackage").Include("TravelPackage.Accommodation")
+                   .Include("User")
                     .First(x => x.Id == id);
             }
             else

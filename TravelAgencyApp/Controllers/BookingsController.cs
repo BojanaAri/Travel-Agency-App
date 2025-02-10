@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TravelAgency.Domain.DomainModels;
 using TravelAgency.Domain.DTO;
 using TravelAgency.Services.Implementation;
 using TravelAgency.Services.Interface;
 using TravelAgencyApp.Data;
+using GemBox.Document;
+
 
 namespace TravelAgency.Web.Controllers
 {
@@ -187,6 +191,8 @@ namespace TravelAgency.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var booking = bookingService.GetBookingById(id);
+
+
             if (booking != null)
             {
                 bookingService.DeleteBooking(id);
@@ -197,10 +203,29 @@ namespace TravelAgency.Web.Controllers
 
         public IActionResult PayOrder(Guid bookingId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? null;
+           
+            var result = bookingService.GetBookingById(bookingId);
 
-            var result = bookingService.Order(userId, bookingId);
-            return RedirectToAction(nameof(Index), new { showNotificationForSuccessfullyPaidBooking = true });
+            ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+
+
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "invoice.docx");
+            var document = DocumentModel.Load(templatePath);
+
+            document.Content.Replace("{{bookingId}}", bookingId.ToString());
+            document.Content.Replace("{{username}}", result.User.Email);
+            document.Content.Replace("{{travelPackage}}", result.TravelPackage.Name);
+            document.Content.Replace("{{accommodation}}", result.TravelPackage.Accommodation.Name);
+            document.Content.Replace("{{numNights}}", result.TravelPackage.NumberOfNights.ToString());
+            document.Content.Replace("{{numRooms}}", result.NumberOfRooms.ToString());
+            document.Content.Replace("{{totalPrice}}", result.FullPrice.ToString() + " $");
+
+            var stream = new MemoryStream();
+            document.Save(stream, new PdfSaveOptions());
+            return File(stream.ToArray(), new PdfSaveOptions().ContentType, "ExportInvoice.pdf");
+
+           // var result = bookingService.Order(userId, bookingId);
+           // return RedirectToAction(nameof(Index), new { showNotificationForSuccessfullyPaidBooking = true });
         }
 
 
