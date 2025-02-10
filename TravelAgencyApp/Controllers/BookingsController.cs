@@ -52,7 +52,6 @@ namespace TravelAgency.Web.Controllers
                                                 NumberOfNights = booking.TravelPackage.NumberOfNights,
                                                 PricePerNight = booking.TravelPackage.Accommodation.PricePerNight,
                                             }).ToList();
-
             if (showNotificationForSuccessfullyPaidBooking)
             {
                 ViewData["showNotificationForSuccessfullyPaidBooking"] = true;
@@ -127,7 +126,7 @@ namespace TravelAgency.Web.Controllers
             {
                 return NotFound();
             }
-          //  ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
+       
             return View(bookingDTO);
         }
 
@@ -164,7 +163,7 @@ namespace TravelAgency.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-          //  ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Id", booking.TravelPackageId);
+
             return View(booking);
         }
 
@@ -203,11 +202,17 @@ namespace TravelAgency.Web.Controllers
 
         public IActionResult PayOrder(Guid bookingId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
            
+            var order = bookingService.Order(userId, bookingId);
+            return RedirectToAction(nameof(Index), new { showNotificationForSuccessfullyPaidBooking = true});
+        }
+
+        public IActionResult ExportPdfOfBooking(Guid bookingId)
+        {
             var result = bookingService.GetBookingById(bookingId);
-
+           
             ComponentInfo.SetLicense("FREE-LIMITED-KEY");
-
 
             var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "invoice.docx");
             var document = DocumentModel.Load(templatePath);
@@ -223,11 +228,7 @@ namespace TravelAgency.Web.Controllers
             var stream = new MemoryStream();
             document.Save(stream, new PdfSaveOptions());
             return File(stream.ToArray(), new PdfSaveOptions().ContentType, "ExportInvoice.pdf");
-
-           // var result = bookingService.Order(userId, bookingId);
-           // return RedirectToAction(nameof(Index), new { showNotificationForSuccessfullyPaidBooking = true });
         }
-
 
     }
 }
