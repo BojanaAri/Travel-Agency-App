@@ -41,6 +41,10 @@ namespace TravelAgency.Services.Implementation
 
             Accommodation accommodation= travelPackage.Accommodation;
 
+            travelPackage.AvailableRooms = travelPackage.AvailableRooms - numRooms;
+
+            _travelPackageService.UpdateTravelPackage(travelPackage);
+
             booking.FullPrice = accommodation.PricePerNight * travelPackage.NumberOfNights * numRooms;
             return  _bookingRepository.Insert(booking);
         }

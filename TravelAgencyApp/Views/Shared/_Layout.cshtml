@@ -16,7 +16,7 @@
                     <img src="/images/logo_white.png" alt="logo" style="width:110%; height:25%;" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="margin-left:20px">
@@ -24,9 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="TravelPackages" asp-action="Index">Travel Packages</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Accommodations" asp-action="Index">Accommodations</a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Accommodations" asp-action="Index">Accommodations</a>
+                        </li> }
                        
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Bookings" asp-action="Index">Your Bookings</a>
