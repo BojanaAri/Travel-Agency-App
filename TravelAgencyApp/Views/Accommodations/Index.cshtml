@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h1 style ="color: white;">Index</h1>
+<h1 style="color: #314354; font-weight: 500">Index</h1>
 
-<p style="color: white;">
+<p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table" style="color: white;">
+<table class="table" style="color: #314354;">
     <thead>
         <tr>
             <th>
@@ -49,9 +49,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MaxNumberOfRooms)
             </td>
-            <td>
+                <td style="color:#314354;">
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

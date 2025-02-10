@@ -30,10 +30,30 @@ namespace TravelAgency.Web.Controllers
         }
 
         //GET: Bookings
-        public IActionResult Index()
+        public IActionResult Index(bool showNotificationForSuccessfullyPaidBooking = false)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(bookingService.GetBookingsByUser(userId));
+            List<Booking> bookingsByUser = bookingService.GetBookingsByUser(userId);
+
+            List<BookingDTO> bookingDTOs = bookingsByUser.Select(booking => new BookingDTO
+                                            {
+                                                BookingId = booking.Id,
+                                                travelPackageId = booking.TravelPackageId,
+                                                travelPackageName = booking.TravelPackage?.Name,
+                                                accommodationName = booking.TravelPackage?.Accommodation?.Name,
+                                                DepartureDate = booking.TravelPackage.DepartureDate,
+                                                FullPrice = booking.FullPrice,
+                                                numberOfRooms = booking.NumberOfRooms,
+                                                username = booking.User?.UserName,
+                                                NumberOfNights = booking.TravelPackage.NumberOfNights,
+                                                PricePerNight = booking.TravelPackage.Accommodation.PricePerNight,
+                                            }).ToList();
+
+            if (showNotificationForSuccessfullyPaidBooking)
+            {
+                ViewData["showNotificationForSuccessfullyPaidBooking"] = true;
+            }
+            return View(bookingDTOs);
         }
 
         // GET: Bookings/Details/5
@@ -164,9 +184,14 @@ namespace TravelAgency.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //private bool BookingExists(Guid id)
-        //{
-        //    return _context.Bookings.Any(e => e.Id == id);
-        //}
+        public IActionResult PayOrder(Guid bookingId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? null;
+
+            var result = bookingService.Order(userId, bookingId);
+            return RedirectToAction(nameof(Index), new { showNotificationForSuccessfullyPaidBooking = true });
+        }
+
+
     }
 }

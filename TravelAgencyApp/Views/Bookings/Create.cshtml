@@ -5,16 +5,14 @@
     var travelPackageName = ViewData["TravelPackageName"];
     var travelPackageId = ViewData["TravelPackageId"];
     var user = ViewData["User"];
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h1>Create</h1>
-<h3>Welcome @user</h3>
-<h4>Booking</h4>
-<h4>Travel Package: @travelPackageName </h4>
-<hr />
+<h1 style="color: #37435c">Create Booking for</h1>
+<h4 style="color: #37435c">Travel Package: @travelPackageName </h4>
+<hr style="color: #37435c" />
 
-<p>Enter the number of rooms you want to book for this Travel Package</p>
+<p style="color: white">Enter the number of rooms you want to book for this Travel Package</p>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -23,20 +21,20 @@
             <input type="hidden" asp-for="travelPackageId" value="@travelPackageId" />
             
             <div class="form-group">
-                <label asp-for="numberOfRooms" class="control-label"></label>
+                <label asp-for="numberOfRooms" class="control-label text-white">Number of Rooms:</label>
                 <input asp-for="numberOfRooms" class="form-control" />
-                <span asp-validation-for="numberOfRooms" class="text-danger"></span>
+                <span asp-validation-for="numberOfRooms"  style="color:white"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn border-0 text-white" style="background-color: #36796a;" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" style="color: #37435c">Back to List</a>
 </div>
 
 @section Scripts {
