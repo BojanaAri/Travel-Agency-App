@@ -66,6 +66,13 @@ namespace TravelAgency.Services.Implementation
             return _bookingRepository1.GetBookingsByUser(username);
         }
 
+        public bool Order(string? userId, Guid bookingId)
+        {
+            //Implement export here
+            var booking = this.DeleteBooking(bookingId);
+            return booking != null;
+        }
+
         public Booking UpdateBooking(Booking booking)
         {
             throw new NotImplementedException();
