@@ -15,5 +15,6 @@ namespace TravelAgency.Services.Interface
         public Booking CreateNewBooking(string userId, Guid travelPackageId, int numRooms);
         public Booking UpdateBooking(Booking booking);
         public Booking DeleteBooking(Guid id);
+        bool Order(string? userId, Guid bookingId);
     }
 }

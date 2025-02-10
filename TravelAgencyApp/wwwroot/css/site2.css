@@ -79,7 +79,7 @@ a#book-now-button:hover {
     }
 
 .nav-link {
-    color: white!important;
+    color: #385660!important;
     font-size: 19px;
     margin-right: 30px;
 }
@@ -103,3 +103,41 @@ a#book-now-button:hover {
     font-size: xxx-large;
     color: #585a5b;
 }
+
+a {
+    color: #314354;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: white;
+    }
+
+
+.alert-paid-order {
+    padding: 20px;
+    background-color: #64cba1; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    opacity: 1;
+    transition: opacity 0.6s; /* 600ms to fade out */
+    position:absolute;
+    top: 0px;
+    width: 100%;
+    left:0px;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .closebtn:hover {
+        color: black;
+    }

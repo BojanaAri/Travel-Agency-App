@@ -25,8 +25,10 @@ namespace TravelAgency.Repository.Implementation
         public List<Booking> GetBookingsByUser(string username)
         {
             return entities.Include(b => b.User).Include(b => b.TravelPackage)
-                .Where(b => b.UserId == username).
-                ToList();
+                .Where(b => b.UserId == username)
+                .Include(b => b.TravelPackage)
+                .Include(b => b.TravelPackage.Accommodation)    
+                .ToList();
         }
     }
 }
