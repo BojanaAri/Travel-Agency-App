@@ -79,7 +79,7 @@ a#book-now-button:hover {
     }
 
 .nav-link {
-    color: #385660!important;
+    color: white!important;
     font-size: 19px;
     margin-right: 30px;
 }
@@ -141,3 +141,10 @@ a {
     .closebtn:hover {
         color: black;
     }
+
+
+.album-cover {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}

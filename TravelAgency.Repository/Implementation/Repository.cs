@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.DomainModels;
+using TravelAgency.Domain.DomainModelsFromMusicStore;
 using TravelAgency.Domain.Identity;
 using TravelAgency.Repository.Interface;
 using TravelAgencyApp.Data;
@@ -35,6 +36,12 @@ namespace TravelAgency.Repository.Implementation
             {
                 return entities
                     .Include("Bookings")
+                    .AsEnumerable();
+            }
+            else if (typeof(T).IsAssignableFrom(typeof(Artist)))
+            {
+                return entities
+                    .Include("Albums")
                     .AsEnumerable();
             }
             else if (typeof(T).IsAssignableFrom(typeof(Booking)))

@@ -30,6 +30,8 @@ builder.Services.AddTransient<ITravelPackageService, TravelPackageService>();
 builder.Services.AddTransient<IAccommodationService, AccommodationService>();
 builder.Services.AddTransient<IBookingService, BookingService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAlbumService, AlbumService>();
+builder.Services.AddTransient<IArtistsService, ArtistService>();
 
 var app = builder.Build();
 
